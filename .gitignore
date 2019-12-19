@@ -1,0 +1,6 @@
+*.log
+.classpath
+.settings
+bin/
+.project
+config.properties

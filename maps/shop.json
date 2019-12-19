@@ -1,0 +1,39 @@
+{
+    "name" : "shop",
+    "dialog" : [{
+        "speaker" : "商店老板",
+        "content" : "请问您有什么需要购买的吗？"
+    },{
+        "speaker" : "我",
+        "content" : "我这里有个xxx,请问您可以打折吗?"
+    },{
+        "speaker" : "商店老板",
+        "content" : "我这里有个问题，请你回答一下。"
+    },{
+        "speaker" : "商店老板",
+        "content" : "1 + 1 = ？",
+        "options" : [{
+            "text": "2",
+            "followText" : [{
+                "speaker" : "商店老板",
+                "content" : "回答正确,接下来的购买皆可以的享受9折优惠！"
+            }],
+            "hasCallback" : true,
+            "callbackID" : "1",
+            "callbackParam" : "{\"factor\":0.9}"
+        },{
+            "text" : "1",
+            "followText" : [{
+                "speaker" : "商店老板",
+                "content" : "回答错误,接下来的购买皆可以的享受11折优惠！"
+            }],
+            "hasCallback" : true,
+            "callbackID" : "1",
+            "callbackParam" : "{\"factor\":1.1}"
+        },{
+            "text": "对不起，我不知道",
+            "followText" : [],
+            "hasCallback" : false
+        }]
+    }]
+}
