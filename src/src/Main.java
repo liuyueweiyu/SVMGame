@@ -9,13 +9,12 @@ import manager.GLManager;
 import manager.InputManager;
 import manager.WindowManager;
 import renderer.RenderManager;
-import renderer.RenderManager.Priority;
 import module.EventHandler;
 import module.ModuleLoader;
-
-
+import props.Shop;
 import scene.Menu;
 import scene.PlanetAera;
+import scene.map.CallbackHander;
 
 public class Main {
 
@@ -45,6 +44,9 @@ public class Main {
 	}
 	
 	private void init() { // your init codes
+		CallbackHander.getInstance().registerCallBack();
+		Shop.getShop().init();
+		
 		PlanetAera planetAera = new PlanetAera();
 		planetAera.Open();
 //		Menu menu = new Menu();

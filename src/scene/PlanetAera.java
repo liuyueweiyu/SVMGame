@@ -5,6 +5,7 @@ import mode.GlobalMode;
 import mode.ModeManger;
 import module.ModuleLoader;
 import scene.dialog.Arena;
+import scene.dialog.GlobalArena;
 import scene.map.MapParse;
 
 public class PlanetAera implements Action  {
@@ -13,8 +14,8 @@ public class PlanetAera implements Action  {
 	public void Open() {
 		// TODO Auto-generated method stub
 		ModeManger.setCurrentMode(GlobalMode.GlobalTextInteractionMode);
-		
 		Arena shop = MapParse.Load("shop");
+		GlobalArena.setCurrentArena(shop);
 //		shop.Start();
 	}
 	

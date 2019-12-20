@@ -10,7 +10,7 @@ import entity.component.Model;
  * 三维模型基类
  */
 
-public class MoveEntity extends Entity{
+public class MobileEntity extends Entity{
     
     protected Vector3f velocity = new Vector3f();
     
@@ -18,11 +18,11 @@ public class MoveEntity extends Entity{
 
     protected float scale;
     
-    public MoveEntity(Model model, String shader) {
+    public MobileEntity(Model model, String shader) {
     	super(model,shader);
     }
 
-    public MoveEntity(Model model) {
+    public MobileEntity(Model model) {
     	super(model);
     }
 

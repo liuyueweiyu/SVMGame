@@ -29,9 +29,34 @@ public class Entity2D implements Renderable {
 	protected double x = 0, y = 0;
 	protected int z = 0;
 	
-
+	public Entity2D(String str, int size, Color c) {
+		isText = true;
+		isLabelable = false;
+		Font f = new Font(null, Font.PLAIN, size);
+		FontMetrics fm = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics().getFontMetrics(f);
+		w = fm.stringWidth(str);
+		h = fm.getHeight()*3/2;
+		
+		BufferedImage image = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = image.getGraphics();
+		g.setColor(c);
+		g.setFont(f);
+		g.drawString(str, 0, fm.getHeight()-1);
+		tex = new Texture(image);
+		vao = glGenVertexArrays();
+		vbo = glGenBuffers();
+		glBindBuffer(GL_ARRAY_BUFFER, vbo);
+		glBufferData(GL_ARRAY_BUFFER, getMeshData(), GL_STATIC_DRAW);
+		bind();
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 72);
+	}
+	
 	public Entity2D(String str, int width, int size, Color c) {
 		isText = true;
+		isLabelable = false;
 		Font f = new Font(null, Font.PLAIN, size);
 		FontMetrics fm = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB).getGraphics().getFontMetrics(f);
 		String[] strs = strSplit(str, fm, width);
@@ -94,7 +119,7 @@ public class Entity2D implements Renderable {
 		bind();
 		tex.bind(0);
 		shader.bind();
-		shader.setUniform("MVPmat", Transformation.getTranslateMatrix(glx(x), gly(y),z));
+		shader.setUniform("MVPmat", Transformation.getTranslateMatrix(glx(x), gly(y),1-1f/(1+z)));
 		shader.setUniform("tex", 0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
@@ -185,5 +210,8 @@ public class Entity2D implements Renderable {
 		return data;
 	}
 
+	
+	
+	
 
 }

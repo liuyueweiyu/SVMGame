@@ -45,8 +45,11 @@ public class UIEventManger {
 	}
     
     public void OnHover(HoverEvent event) {
-//    	UIEventObj obj = new UIEventObj(event.getLabel());
-//    	dispatch(UIEventType.UIOnHover, obj);
+    	UIEventObj obj = new UIEventObj(event.getLabel());
+    	obj.setX(event.getX());
+    	obj.setY(event.getY());
+    	dispatch(UIEventType.UIOnHover, obj);
+    	
     }
     
     public void OnMouseEnter(MouseEnterEvent event) {
@@ -64,6 +67,17 @@ public class UIEventManger {
 			uiEventFunction.run(uiEventObj);
 		}
 	}
+    
+    public void removeEventLister(int id,UIEventType type) {
+		events.remove(new Key(id, type));
+	}
+    
+    public void removeEventLister(int id) {
+		events.remove(new Key(id, UIEventType.UIOnClick));
+		events.remove(new Key(id, UIEventType.UIOnHover));
+		events.remove(new Key(id, UIEventType.UIOnMouseEnter));
+		events.remove(new Key(id, UIEventType.UIOnKey));
+    }
     
     
     private void dispatch(UIEventType type, UIEventObj obj) {

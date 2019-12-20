@@ -2,6 +2,7 @@ package scene.map;
 
 
 
+import java.awt.Dialog;
 import java.io.File;
 import java.io.IOException;
 
@@ -15,7 +16,10 @@ public class MapParse {
 	static public Arena Load(String mapName) {
 		
 		String mapString = ReadJsonFile(mapName);
+		
 		Map map = JSON.parseObject(mapString,Map.class);
+		
+
 		Arena arena = new Arena(map);
 		arena.Start();
 		return arena;

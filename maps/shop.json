@@ -14,26 +14,56 @@
         "content" : "1 + 1 = ？",
         "options" : [{
             "text": "2",
-            "followText" : [{
-                "speaker" : "商店老板",
-                "content" : "回答正确,接下来的购买皆可以的享受9折优惠！"
-            }],
-            "hasCallback" : true,
-            "callbackID" : "1",
-            "callbackParam" : "{\"factor\":0.9}"
+            "callbackID" : "SetPalyerProps",
+            "callbackParam" : "{\"factor\":0.9}",
+            "nextPos" : 4
         },{
             "text" : "1",
-            "followText" : [{
-                "speaker" : "商店老板",
-                "content" : "回答错误,接下来的购买皆可以的享受11折优惠！"
-            }],
-            "hasCallback" : true,
             "callbackID" : "1",
-            "callbackParam" : "{\"factor\":1.1}"
+            "callbackParam" : "{\"factor\":1.1}",
+            "nextPos" : 5
         },{
             "text": "对不起，我不知道",
-            "followText" : [],
-            "hasCallback" : false
+            "hasCallback" : false,
+            "nextPos" : 6
         }]
+    },{
+        "speaker" : "商店老板",
+        "content" : "回答正确,接下来的购买皆可以的享受9折优惠！",
+        "nextPos" : 6
+    },{
+        "speaker" : "商店老板",
+        "content" : "回答错误,接下来的购买皆需要上调10%！"
+    },{
+        "speaker" : "商店老板",
+        "content" : "我们的商品物美价廉，开始购买吧~"
+    },{
+        "speaker" : "商店老板",
+        "content" : "选择商品",
+        "options" : [{
+            "text": "物品1",
+            "callbackID" : "BuyGoods",
+            "callbackParam" : "{\"name\":\"good-1\",money:100}",
+            "hoverContent" : "使用该物品时，可获取5s的无敌，价值100金币"
+        },{
+            "text": "物品2",
+            "callbackID" : "BuyGoods",
+            "callbackParam" : "{\"name\":\"good-1\",\"money\": 1000}",
+            "hoverContent" : "使用该物品时，可改变尾焰颜色，价值1000金币"
+        },{
+            "text": "取消购买"
+        }]
+    },{
+        "speaker" : "商店老板",
+        "content" : "是否继续购买",
+        "options" :[{
+            "text" : "是",
+            "nextPos" : 7
+        },{
+            "text" : "否"
+        }]
+    },{
+        "speaker" : "商店老板",
+        "content" : "谢谢惠顾~"
     }]
 }

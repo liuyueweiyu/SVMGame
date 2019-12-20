@@ -4,7 +4,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import camera.Camera;
-import entity.MoveEntity;
+import entity.MobileEntity;
 import entity.Entity;
 import manager.WindowManager;
 
