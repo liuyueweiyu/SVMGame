@@ -20,5 +20,6 @@ public class School implements Action {
 	public void Close() {
 		// TODO Auto-generated method stub
 		arena.End();
+		ModeManger.setCurrentMode(GlobalMode.GlobalNoneMode);
 	}
 }

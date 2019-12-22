@@ -83,7 +83,7 @@ public class Space implements Action {
 		
 		setBag();
 		ModeManger.setCurrentMode(GlobalMode.GlobalCollisionMode);
-		UIEventManger.getInstance().addEventListenner(ModeManger.getCurrentModeInt(), UIEventType.UIOnKey, new UIEventFunction() {
+		UIEventManger.getInstance().addEventListenner(GlobalMode.GlobalCollisionMode.hashCode(), UIEventType.UIOnKey, new UIEventFunction() {
 			
 			@Override
 			public boolean run(UIEventObj uiEventObj) {
@@ -131,6 +131,7 @@ public class Space implements Action {
 		if (count != null) {			
 			count.clear();
 		}
+		ModeManger.setCurrentMode(GlobalMode.GlobalNoneMode);
 		// TODO Auto-generated method stub
 		
 	}

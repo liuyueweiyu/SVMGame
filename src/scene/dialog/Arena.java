@@ -14,6 +14,7 @@ import common.RemoveType;
 import common.Util;
 import entity.Entity2D;
 import event.KeyEvent;
+import mode.GlobalMode;
 import mode.ModeManger;
 import module.ResourceLoader;
 import player.Player;
@@ -90,8 +91,7 @@ public class Arena {
 			}
 		});
 		this.changeDialog();	
-		UIEventManger.getInstance().addEventListenner(ModeManger.getCurrentModeInt(), UIEventType.UIOnKey, new UIEventFunction() {
-			
+		UIEventManger.getInstance().addEventListenner(GlobalMode.GlobalTextInteractionMode.hashCode(), UIEventType.UIOnKey, new UIEventFunction() {
 			@Override
 			public boolean run(UIEventObj uiEventObj) {
 				// TODO Auto-generated method stub

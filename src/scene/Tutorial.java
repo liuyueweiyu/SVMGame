@@ -21,6 +21,7 @@ public class Tutorial implements Action {
 	private Entity2D bg,text,title;
 	@Override
 	public void Open() {
+		ModeManger.setCurrentMode(GlobalMode.GlobalTextInteractionMode);
 		// TODO Auto-generated method stub
 		int w = (int) (Constant.WIDTH) / 10 * 8,
 			h = (int) (Constant.HEIGHT) / 10 * 8,
@@ -31,7 +32,7 @@ public class Tutorial implements Action {
 		String texrString = "    在太空中畅游，并躲避陨石，通过'w','a','s','d','r','f'操控飞行器，并向太阳飞行，在飞向太阳的过程中，可以选择的行星降落,可在行星降落后，浏览相关剧情或购买所需物品。按'enter'键，开始您的旅程吧！";
 		title = ResourceLoader.creatTextButton("游戏教程", x+padding, y-padding, LayerConstant.LayerInformationText, 24, Color.WHITE);
 		text = ResourceLoader.creatTextButton(texrString,w -2*padding , x+padding, y-3*padding, LayerConstant.LayerInformationText, 20,Color.WHITE);
-		UIEventManger.getInstance().addEventListenner(ModeManger.getCurrentModeInt(), UIEventType.UIOnKey, new UIEventFunction() {
+		UIEventManger.getInstance().addEventListenner(GlobalMode.GlobalTextInteractionMode.hashCode(), UIEventType.UIOnKey, new UIEventFunction() {
 			@Override
 			public boolean run(UIEventObj uiEventObj) {
 				// TODO Auto-generated method stub
@@ -39,7 +40,7 @@ public class Tutorial implements Action {
 					Close();
 					// 打开游戏
 //					Main.setCurrentSence(new PlanetAera());
-					Main.setCurrentSence(new Company());
+					Main.setCurrentSence(new Gameover());
 					Main.getCurrentSence().Open();
 				}
 				return false;
