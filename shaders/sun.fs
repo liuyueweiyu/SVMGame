@@ -11,6 +11,5 @@ float depth(in float z)
 void main()
 {
     fragColor = 2*texture(diffuse_tex, extex);
-
     gl_FragDepth  = depth(expos.z);
 }

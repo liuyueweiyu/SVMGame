@@ -40,8 +40,17 @@ public class CallbackHander {
 			public void run(String jsonStr) {
 				// TODO Auto-generated method stub
 				JSONObject  object = JSON.parseObject(jsonStr);
+				System.out.println(Player.getPlayer().getMoney());
 				String res = Player.getPlayer().BuyGood(object.getIntValue("money"), Shop.getShop().getGoods(object.getString("name")));
-				GlobalArena.getCurrentArena().addDialogsNow(new Dialog("商店老板",res));
+				GlobalArena.getCurrentArena().addDialogsNow(new Dialog("商店老板","shopman",res));
+				
+			}
+		});
+		callbackMap.put("DoSomeTreatment", new DialogCallback() {
+			@Override
+			public void run(String jsonStr) {
+				// TODO Auto-generated method stub
+				System.out.println("do some treatment");
 			}
 		});
 		

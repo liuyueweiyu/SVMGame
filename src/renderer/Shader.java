@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
 import org.joml.Vector2fc;
 import org.joml.Vector3fc;
 import org.lwjgl.system.MemoryStack;
@@ -56,7 +57,7 @@ public class Shader {
 		return true;
 	}
 
-	public boolean setUniform(String uniformName, Matrix4f value) {
+	public boolean setUniform(String uniformName, Matrix4fc value) {
 		bind();
 		if(!uniforms.containsKey(uniformName) && !createUniform(uniformName))
 			return false;

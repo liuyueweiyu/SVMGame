@@ -1,24 +1,27 @@
 package src;
 
-
 import camera.Camera;
-import entity.MoveText;
+import camera.TrackCamera;
+import entity.OpEntity;
 import event.Event;
 import event.TickEvent;
 import manager.GLManager;
 import manager.InputManager;
 import manager.WindowManager;
-import renderer.RenderManager;
-import module.EventHandler;
-import module.ModuleLoader;
+import module.ResourceLoader;
 import props.Shop;
+import renderer.RenderManager;
+import scene.Action;
 import scene.Menu;
 import scene.PlanetAera;
+import scene.Space;
 import scene.map.CallbackHander;
 
 public class Main {
 
-	public static Camera camera= new Camera();
+	public static Camera camera;
+	public static OpEntity craft;
+	public static Action currentSence;
 	
 	public void run() {
 
@@ -26,38 +29,41 @@ public class Main {
 		init();
 		loop();
 		exit();
-		
+
 	}
 
-	private void preinit() {//system init
+	private void preinit() {// system init
 		WindowManager.init();
-		InputManager.init();
 		RenderManager.init();
-		Event.register(EventHandler.class);
-		camera.setPosition(0, 100f, 0);
-		ModuleLoader.load();
+		ResourceLoader.load();
 
+	}
+
+	private void init() { // your init codes
+		MotionHandler.init();
+		InputManager.init();
 		GLManager.Blend(true);
 		GLManager.DepthTest(true);
-		GLManager.setClearColor(0, 0.5,0.5, 1.0);
+		GLManager.setClearColor(0, 0.5, 0.5, 1.0);
 		RenderManager.LabelMode(true);
-	}
-	
-	private void init() { // your init codes
+		
 		CallbackHander.getInstance().registerCallBack();
 		Shop.getShop().init();
-		
-		PlanetAera planetAera = new PlanetAera();
-		planetAera.Open();
-//		Menu menu = new Menu();
-//		menu.Open();
+
+//		Space space = new Space();
+//		space.Open();
+//		camera = new TrackCamera(space.craft);
+//		InputManager.setTarget(space.craft);
+
+
+		currentSence = new Menu();
+		currentSence.Open();
 	}
 
-	
-	
-	
-	private void loop() {		
+	private void loop() {
+
 		while (!WindowManager.shouldClose()) {
+
 			RenderManager.render(camera);
 			WindowManager.SwapBuffers(); // swap the color buffers
 			RenderManager.Label(camera);
@@ -65,15 +71,24 @@ public class Main {
 			new TickEvent(GLManager.getTime()).post();
 		}
 	}
-	
+
 	private void exit() {
 		WindowManager.close();
 	}
 
-
-	
 	public static void main(String[] args) {
 		new Main().run();
 	}
+
+	public static Action getCurrentSence() {
+		return currentSence;
+	}
+
+	public static void setCurrentSence(Action currentSence) {
+		Main.currentSence = currentSence;
+	}
+	
+	
+	
 
 }

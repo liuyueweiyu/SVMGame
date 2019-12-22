@@ -1,0 +1,37 @@
+{
+    "name" : "school",
+    "dialog" : [{
+        "speakerId" : "teacher",
+        "speaker" : "语文老师",
+        "content" : "今天我们来上课了！让我点名看看谁没来，张三，李四...."
+    },{
+        "speakerId" : "teacher",
+        "speaker" : "语文老师",
+        "content" : "咦，鲍勃没来。？"
+    },{
+        "speakerId" : "me",
+        "speaker" : "我",
+        "content" : "是的，老师，我从今早就看到他没有来了。"
+    },{
+        "speakerId" : "teacher",
+        "speaker" : "语文老师",
+        "content" : "他似乎是在某个行星上开了一个商店，你能帮我去找找他吗？",
+        "options" :[{
+            "text" : "可以的，老师。",
+            "nextPos" : 4
+        },{
+            "text" : "老师我在考虑一下。",
+            "nextPos" : 5
+        }]
+    },{
+        "speakerId" : "teacher",
+        "speaker" : "语文老师",
+        "content" : "真是个好孩子。",
+        "nextPos" : -1
+    },{
+        "speakerId" : "teacher",
+        "speaker" :"语文老师",
+        "content" : "我尊重你的选择。",
+        "nextPos" : -1
+    }]
+}

@@ -17,19 +17,14 @@ public interface Renderable {
 		return this.hashCode();
 	}
 
-	default public Priority Prioritydefault() {
+	default public Priority defaultPriority() {
 		return Priority.NORMAL;
 	}
-	
 	public enum Priority {
 		HIGHEST, // First to Render
 		HIGH,
 		NORMAL,
 		LOW, // Last to Render
 		LOWEST
-	}
-
-	public default Priority defaultPriority() {
-		return Priority.NORMAL;
 	}
 }

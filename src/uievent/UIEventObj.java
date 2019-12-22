@@ -7,7 +7,6 @@ public class UIEventObj extends Event {
 	private int keyValue;
 	private int x,y;
 	
-	
 	public UIEventObj() { }
 
 	public UIEventObj(int label) {

@@ -2,14 +2,15 @@ package player;
 
 import player.bag.Bag;
 import props.goods.Goods;
+import props.goods.UseGood;
 
 public class Player {
 	
 	private String Name;
 	private String ID;
 
-	private Bag bag = new Bag(20);
-	private int money = 100;
+	private static Bag bag = new Bag(20);
+	private int money = 0;
 	private static Player instance;
     private  Player(){}
     public static  Player getPlayer(){
@@ -20,6 +21,7 @@ public class Player {
     }
     
     public String BuyGood(int money,Goods good) {
+    	
 		if (money > this.money) {
 			return "½ğ¶î²»×ã£¬¹ºÂòÊ§°Ü";
 		}
@@ -27,6 +29,7 @@ public class Player {
 		if (str != "") {
 			return str;
 		}
+		this.money = this.money - money;
     	return "¹ºÂò³É¹¦";
 	}
     

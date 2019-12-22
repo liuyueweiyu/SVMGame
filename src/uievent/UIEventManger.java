@@ -31,7 +31,7 @@ public class UIEventManger {
     
 
     public void OnClick(ClickEvent event) {
-    	if (event.getAction() == KeyEvent.RELEASE) {
+    	if (event.getAction() == KeyEvent.RELEASE && event.getButton() == ClickEvent.MOUSE_BUTTON_LEFT) {
     		UIEventObj obj = new UIEventObj(event.getLabel());
         	dispatch(UIEventType.UIOnClick, obj);
 		}
@@ -39,9 +39,12 @@ public class UIEventManger {
         
     
     public void OnKey(KeyEvent	event) {
-    	UIEventObj obj = new UIEventObj(ModeManger.getCurrentModeInt());
-    	obj.setKeyValue(event.getKey());
-    	dispatch(UIEventType.UIOnKey, obj);
+    	if (event.getAction() == KeyEvent.RELEASE ) {
+        	UIEventObj obj = new UIEventObj(ModeManger.getCurrentModeInt());
+        	obj.setKeyValue(event.getKey());
+        	dispatch(UIEventType.UIOnKey, obj);
+		}
+
 	}
     
     public void OnHover(HoverEvent event) {

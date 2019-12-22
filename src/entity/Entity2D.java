@@ -53,7 +53,7 @@ public class Entity2D implements Renderable {
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 72);
 	}
-	
+
 	public Entity2D(String str, int width, int size, Color c) {
 		isText = true;
 		isLabelable = false;
@@ -119,7 +119,7 @@ public class Entity2D implements Renderable {
 		bind();
 		tex.bind(0);
 		shader.bind();
-		shader.setUniform("MVPmat", Transformation.getTranslateMatrix(glx(x), gly(y),1-1f/(1+z)));
+		shader.setUniform("MVPmat", Transformation.getTranslateMatrix(glx(x), gly(y),1-1f/(z+1)));
 		shader.setUniform("tex", 0);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 	}
@@ -210,8 +210,5 @@ public class Entity2D implements Renderable {
 		return data;
 	}
 
-	
-	
-	
 
 }

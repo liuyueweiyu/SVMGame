@@ -15,6 +15,16 @@ public class Texture {
 	
 	private int texId;
 	
+	public Texture(File file) {
+		BufferedImage im = null;
+		try {
+			im = ImageIO.read(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		createTex(im);
+	}
+	
 	public Texture(String path) {
 		BufferedImage im = null;
 		try {

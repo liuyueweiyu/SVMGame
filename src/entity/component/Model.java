@@ -19,7 +19,7 @@ public class Model {
 	String shader = null;
 	List<Mesh> meshes = new ArrayList<>();
 	List<Texture> textures = new ArrayList<>();
-	List<AIMaterial> materials = new ArrayList<>();
+	List<Material> materials = new ArrayList<>();
 
 
 	public String getShaderName() {
@@ -29,9 +29,13 @@ public class Model {
 	public Model(AIScene scene) {
 		loadMeshes(scene);
 		loadTexture(scene);
+		loadMaterial(scene);
+		scene.close();
+	}
+	
+	private void loadMaterial(AIScene scene) {
 		for (int i = 0; i < scene.mNumMaterials(); i++) {
-			materials.add(AIMaterial.createSafe(scene.mMaterials().get(i)));
-
+			materials.add(new Material(AIMaterial.createSafe(scene.mMaterials().get(i))));
 		}
 	}
 
@@ -69,15 +73,11 @@ public class Model {
 		});
 	}
 
-	private Texture getTexbyMat(AIMaterial mat, int Textype) {
-		AIString p = AIString.calloc();
-		Texture tex = null;
-		if (Assimp.aiGetMaterialTexture(mat, Textype, 0, p, (IntBuffer) null, null, null, null, null,
-				null) == Assimp.aiReturn_SUCCESS) {
-			tex = textures.get(Integer.valueOf(p.dataString().substring(1)));
-		}
-		p.free();
-		return tex;
+	private Texture getTexbyMat(Material mat, int Textype) {
+		int texid = mat.getTexId(Textype);
+		if(texid == -1)
+			return null;
+		return textures.get(texid);
 	}
 
 	public void clear() {

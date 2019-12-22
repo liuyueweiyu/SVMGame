@@ -1,6 +1,11 @@
 package scene;
 
+import camera.Camera;
+
 public interface Action {
-	void Open();
-	void Close();
+	public void Open();
+	public void Close();
+	public default Camera camera() {
+		return null;
+	}
 }

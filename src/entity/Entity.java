@@ -1,5 +1,7 @@
 package entity;
 
+import org.joml.Quaternionf;
+import org.joml.Quaternionfc;
 import org.joml.Vector3f;
 
 import camera.Camera;
@@ -18,8 +20,8 @@ public class Entity implements Renderable{
 
     protected final Vector3f position = new Vector3f();
     
-    protected final Vector3f rotation = new Vector3f();
-    
+    protected final Quaternionf rotation = new Quaternionf();
+        
     protected String shader = null;
     
 
@@ -55,14 +57,15 @@ public class Entity implements Renderable{
         return this;
     }
 
-    public Vector3f getRotation() {
+    public Quaternionfc getRotation() {
         return rotation;
     }
 
     public void setRotation(double x, double y, double z) {
-        this.rotation.x = (float) x;
-        this.rotation.y = (float) y;
-        this.rotation.z = (float) z;
+    	rotation.identity();
+        rotation.rotateLocalX((float) Math.toRadians(x));
+        rotation.rotateLocalY((float) Math.toRadians(y));
+        rotation.rotateLocalZ((float) Math.toRadians(z));
     }
 
 
@@ -89,6 +92,7 @@ public class Entity implements Renderable{
 		shader.setUniform("VPmat", Transformation.getVPMatrix(camera));
 		shader.setUniform("sun", new Vector3f(100, 0, 0));
 		model.draw(shader);
+		
 	}
 
 	@Override

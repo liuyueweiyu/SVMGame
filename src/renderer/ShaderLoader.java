@@ -49,34 +49,6 @@ public class ShaderLoader {
 			s.link();
 		});
 	}
-
-	private static Shader loadShader(String name) {
-		String vs = null, gs = null, fs = null;
-
-		try (InputStream s = new FileInputStream(ShaderPath + name + ".vs")) {
-			byte[] b = new byte[s.available()];
-			s.read(b);
-			vs = new String(b);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try (InputStream s = new FileInputStream(ShaderPath + name + ".fs")) {
-			byte[] b = new byte[s.available()];
-			s.read(b);
-			fs = new String(b);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		try (InputStream s = new FileInputStream(ShaderPath + name + ".gs")) {
-			byte[] b = new byte[s.available()];
-			s.read(b);
-			gs = new String(b);
-		} catch (FileNotFoundException e) {
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return (gs == null) ? new Shader(vs, fs) : new Shader(vs, gs, fs);
-	}
 	
 	public static Shader getShader(String name) {
 		if (name == null || !shaders.containsKey(name))

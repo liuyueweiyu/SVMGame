@@ -60,15 +60,19 @@ public class RenderManager {
 
 	public static void add(Renderable entity, Priority priority) {
 		RenderLists.get(priority.ordinal()).add(entity);
+		System.out.printf("ad:%d\n",entity.hashCode());
+		
 	}
 
 	public static void add(Renderable entity) {
-		RenderLists.get(entity.Prioritydefault().ordinal()).add(entity);
+		RenderLists.get(entity.defaultPriority().ordinal()).add(entity);
 	}
 
 	public static void remove(Renderable entity) {
 		for (List<Renderable> list : RenderLists) {
-			list.remove(entity);
+			if(list.remove(entity)) {
+				System.out.printf("rm:%d\n",entity.hashCode());
+			}
 		}
 	}
 

@@ -5,9 +5,12 @@ import java.time.format.TextStyle;
 
 import javax.security.auth.Destroyable;
 
+import common.Log;
+import common.RemoveType;
+import common.Util;
 import entity.Entity2D;
 import entity.MoveText;
-import module.ModuleLoader;
+import module.ResourceLoader;
 import renderer.RenderManager;
 import scene.LayerConstant;
 
@@ -27,33 +30,35 @@ public class TextComponent {
 	private int w,h,x,y,z,fontSize = 24;
 	public TextComponent(String texrString, int w,int h,int x,int y,int z,String background) {
 		// TODO Auto-generated constructor stub
-		bg = ModuleLoader.creatImage(background,w,h,x,y,z);	
+		bg = ResourceLoader.creatImage(background,w,h,x,y,z);	
 		this.w = w;
 		this.h = h;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		text = createText(texrString);		
+		text = createText(texrString);	
+		System.err.println(texrString + ":" +text.getLabel());
 	}
 
 	public TextComponent(String texrString,int x,int y,int z,String background,int fontSize) {
 		// TODO Auto-generated constructor stub
-		
 		this.x = x;
 		this.h = fontSize + padding ;
 		this.y = y;
 		this.z = z;
 		padding = fontSize / 2;
 		this.fontSize = fontSize;
-		text = 	createText(texrString);	
-		bg = ModuleLoader.creatImage(background,text.getW() + padding * 2,h,x,y,z);	
+		text = 	createText(texrString);
+		System.err.println(texrString + ":" +text.getLabel());
+		bg = ResourceLoader.creatImage(background,text.getW() + padding * 2,h,x,y,z);
+		
 	}
 
 	
 	private Entity2D createText(String texrString) {
 		return w != 0 
-				? ModuleLoader.creatTextButton(texrString, w-padding, x + padding , y,z,fontSize ,Color.WHITE) 
-				: ModuleLoader.creatTextButton(texrString, x + padding , y,z,fontSize ,Color.WHITE);
+				? ResourceLoader.creatTextButton(texrString, w-padding, x + padding , y,z-1,fontSize ,Color.WHITE) 
+				: ResourceLoader.creatTextButton(texrString, x + padding , y,z,fontSize ,Color.WHITE);
 	}
 	
 
@@ -73,9 +78,8 @@ public class TextComponent {
 	}
 	
 	public void clear() {
-		RenderManager.remove(bg);
-		RenderManager.remove(text);
-		text.clear();
+		Util.removeEntity2d(RemoveType.RemoveMemory, bg);
+		Util.removeEntity2d(RemoveType.RemoveMemory, text);
 	}
 	
 	

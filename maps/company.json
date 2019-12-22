@@ -1,0 +1,38 @@
+{
+    "name" : "company",
+    "dialog" : [{
+        "speakerId" : "doctor",
+        "speaker" : "医生",
+        "content" : "您好，请问您有什么需要的吗？"
+    },{
+        "speakerId" : "me",
+        "speaker" : "我",
+        "content" : "请问鲍勃在吗？"
+    },{
+        "speakerId" : "doctor",
+        "speaker" : "医生",
+        "content" : "不在。"
+    },{
+        "speakerId" : "doctor",
+        "speaker" : "医生",
+        "content" : "请问你还需要什么帮助吗？",
+        "options" :[{
+            "text" : "恢复治疗",
+            "callbackID" : "DoSomeTreatment",
+            "hoverContent" : "可使角色balabala...",
+            "nextPos":4
+        },{
+            "text" : "不用了，谢谢",
+            "nextPos" : 5
+        }]
+    },{
+        "speakerId" : "teacher",
+        "speaker" : "医生",
+        "content" : "治疗成功，感谢您的再次光临。"
+    },{
+        "speakerId" : "teacher",
+        "speaker" :"医生",
+        "content" : "再见",
+        "nextPos" : -1
+    }]
+}

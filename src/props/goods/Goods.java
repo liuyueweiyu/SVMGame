@@ -18,6 +18,7 @@ public class Goods {
 		count = count + 1;
 	}
 	public String Use() {
+		count --;
 		return this.use.use();
 	
 	}

@@ -1,15 +1,19 @@
 {
     "name" : "shop",
     "dialog" : [{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
-        "content" : "请问您有什么需要购买的吗？"
+        "content" : "请问您有什么需要的吗？"
     },{
+        "speakerId" : "me",
         "speaker" : "我",
-        "content" : "我这里有个xxx,请问您可以打折吗?"
+        "content" : "您是鲍勃吗？"
     },{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
         "content" : "我这里有个问题，请你回答一下。"
     },{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
         "content" : "1 + 1 = ？",
         "options" : [{
@@ -22,48 +26,57 @@
             "callbackID" : "1",
             "callbackParam" : "{\"factor\":1.1}",
             "nextPos" : 5
-        },{
-            "text": "对不起，我不知道",
-            "hasCallback" : false,
-            "nextPos" : 6
         }]
     },{
+        
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
-        "content" : "回答正确,接下来的购买皆可以的享受9折优惠！",
+        "content" : "回答正确,我就是鲍勃",
         "nextPos" : 6
     },{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
-        "content" : "回答错误,接下来的购买皆需要上调10%！"
+        "content" : "回答错误,我不告诉你。"
     },{
+        "speakerId" : "shopman",
+        "speaker" : "商店老板",
+        "content" : "您需要购买什么吗？"
+    },{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
         "content" : "我们的商品物美价廉，开始购买吧~"
     },{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
         "content" : "选择商品",
         "options" : [{
             "text": "物品1",
             "callbackID" : "BuyGoods",
             "callbackParam" : "{\"name\":\"good-1\",money:100}",
-            "hoverContent" : "使用该物品时，可获取5s的无敌，价值100金币"
+            "hoverContent" : "可获取10s的无敌，并突破速度上限，价值100金币"
         },{
             "text": "物品2",
             "callbackID" : "BuyGoods",
-            "callbackParam" : "{\"name\":\"good-1\",\"money\": 1000}",
-            "hoverContent" : "使用该物品时，可改变尾焰颜色，价值1000金币"
+            "callbackParam" : "{\"name\":\"good-2\",\"money\": 150}",
+            "hoverContent" : "获取5次跃迁能力，价值150金币"
         },{
             "text": "取消购买"
         }]
     },{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
         "content" : "是否继续购买",
         "options" :[{
             "text" : "是",
             "nextPos" : 7
         },{
-            "text" : "否"
+            "text" : "否",
+            "nextPos" : 9
         }]
     },{
+        "speakerId" : "shopman",
         "speaker" : "商店老板",
-        "content" : "谢谢惠顾~"
+        "content" : "谢谢惠顾~",
+        "nextPos" : -1
     }]
 }

@@ -23,11 +23,19 @@ public class Shop {
 		// TODO Auto-generated constructor stub
 	}
 	public void init() {
-		commodity.put("good-1",new Goods("name", -1, new UseGood() {
+		commodity.put("good-1",new Goods("物品-1", -1, new UseGood() {
 			@Override
 			public String use() {
 				// TODO Auto-generated method stub
 				System.out.println("use:good-1");
+				return null;
+			}
+		}));
+		commodity.put("good-2",new Goods("物品-2", -1, new UseGood() {
+			@Override
+			public String use() {
+				// TODO Auto-generated method stub
+				System.out.println("use:good-2");
 				return null;
 			}
 		}));
