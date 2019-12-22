@@ -39,8 +39,7 @@ public class Tutorial implements Action {
 				if (uiEventObj.getKeyValue() == KeyEvent.KEY_ENTER) {
 					Close();
 					// ´ò¿ªÓÎÏ·
-//					Main.setCurrentSence(new PlanetAera());
-					Main.setCurrentSence(new Gameover());
+					Main.setCurrentSence(Main.space);
 					Main.getCurrentSence().Open();
 				}
 				return false;

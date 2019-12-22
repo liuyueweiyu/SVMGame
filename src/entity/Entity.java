@@ -3,11 +3,13 @@ package entity;
 import org.joml.Quaternionf;
 import org.joml.Quaternionfc;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import camera.Camera;
 import entity.component.Model;
 import renderer.Renderable;
 import renderer.Shader;
+import src.Main;
 import src.Transformation;
 
 /*
@@ -90,7 +92,7 @@ public class Entity implements Renderable{
 	public void render(Shader shader, Camera camera) {
 		shader.setUniform("MVPmat", Transformation.getModelViewMatrix(this, camera));
 		shader.setUniform("VPmat", Transformation.getVPMatrix(camera));
-		shader.setUniform("sun", new Vector3f(100, 0, 0));
+		shader.setUniform("sun", Main.space.getSunPos());
 		model.draw(shader);
 		
 	}
@@ -99,5 +101,10 @@ public class Entity implements Renderable{
 	public String getShader() {
 		return shader;
 	}
+	
+	public Entity setPosition(Vector3fc pos) {
+    	this.position.set(pos);
+        return this;
+    }
 
 }

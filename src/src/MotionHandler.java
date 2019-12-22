@@ -23,14 +23,25 @@ public class MotionHandler {
 		Event.register(MotionHandler.class);
 	}
 
-	public static void mobileRegist(MobileEntity entity) {
+	public static void removeMC(MobileEntity entity) {
+		mobile.remove(entity);
+	}
+	
+	public static void addMobile(MobileEntity entity) {
 		if (!mobile.contains(entity))
 			mobile.add(entity);
 	}
+	public static void removeMobile(MobileEntity entity) {
+		mobile.remove(entity);
+	}
 	
-	public static void colliderRegist(Collider entity) {
+	
+	public static void addCollider(Collider entity) {
 		if (!collider.contains(entity))
 			collider.add(entity);
+	}
+	public static void removeCollider(Collider entity) {
+		collider.remove(entity);
 	}
 
 	public static void InteractRegist(Aster a, Aster b, double k) {
@@ -85,4 +96,6 @@ public class MotionHandler {
 			}
 		}
 	}
+
+	
 }

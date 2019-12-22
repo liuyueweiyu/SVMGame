@@ -21,6 +21,7 @@ public class Main {
 
 	public static Camera camera;
 	public static OpEntity craft;
+	public static Space space;
 	public static Action currentSence;
 	
 	public void run() {
@@ -50,12 +51,8 @@ public class Main {
 		CallbackHander.getInstance().registerCallBack();
 		Shop.getShop().init();
 
-//		Space space = new Space();
-//		space.Open();
-//		camera = new TrackCamera(space.craft);
-//		InputManager.setTarget(space.craft);
-
-
+		space = new Space();
+	
 		currentSence = new Menu();
 		currentSence.Open();
 	}
@@ -63,10 +60,9 @@ public class Main {
 	private void loop() {
 
 		while (!WindowManager.shouldClose()) {
-
-			RenderManager.render(camera);
+			RenderManager.render(currentSence.camera());
 			WindowManager.SwapBuffers(); // swap the color buffers
-			RenderManager.Label(camera);
+			RenderManager.Label(currentSence.camera());
 			WindowManager.pollEvents();
 			new TickEvent(GLManager.getTime()).post();
 		}

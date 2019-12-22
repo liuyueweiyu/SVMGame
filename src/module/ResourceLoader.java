@@ -57,7 +57,7 @@ public class ResourceLoader {
 	}
 
 	public static void load() {
-//		 loadModel();
+		loadModel();
 		loadtextures();
 	}
 

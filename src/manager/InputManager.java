@@ -33,14 +33,14 @@ public class InputManager {
 	private static boolean inWindow;
 	private static boolean rightButtonPressed;
 //	static Camera camera;
-	static OpEntity target;
-
+	private static OpEntity craft;
+	
 	public static void init() {
 		Event.register(InputManager.class);
 	}
 	
-	public static void setTarget(OpEntity tar) {
-		target = tar;
+	public static void setCraft(OpEntity target) {
+		craft = target;
 	}
 
 	public static void onKey(KeyEvent event) {
@@ -93,32 +93,30 @@ public class InputManager {
 	public static void onTick(TickEvent event) {
 		float d = 0.2f;
 		float r = 0.5f;
-		if (target != null) {
-			if (D)
-				target.right(d);
-			if (A)
-				target.right(-d);
-			if (S)
-				target.addspeed(-d);
-			if (W)
-				target.addspeed(d);
-			if (R)
-				target.up(d);
-			if (F)
-				target.up(-d);
-			if (E)
-				target.roll(r);
-			if (Q)
-				target.roll(-r);
-			if (down)
-				target.pitch(-r);
-			if (up)
-				target.pitch(r);
-			if (left)
-				target.yaw(-r);
-			if (right)
-				target.yaw(r);
-		}
+		if (D)
+			craft.right(d);
+		if (A)
+			craft.right(-d);
+		if (S)
+			craft.addspeed(-d);
+		if (W)
+			craft.addspeed(d);
+		if (R)
+			craft.up(d);
+		if (F)
+			craft.up(-d);
+		if (E)
+			craft.roll(r);
+		if (Q)
+			craft.roll(-r);
+		if (down)
+			craft.pitch(-r);
+		if (up)
+			craft.pitch(r);
+		if (left)
+			craft.yaw(-r);
+		if (right)
+			craft.yaw(r);
 	}
 
 	public static void onMouseMove(HoverEvent event) {
@@ -126,15 +124,13 @@ public class InputManager {
 
 			rotVec.x = event.getX() - mousePos.x;
 			rotVec.y = event.getY() - mousePos.y;
-			target.pitch(rotVec.y * 0.1);
-			target.yaw(rotVec.x * 0.1);
+			craft.pitch(rotVec.y * 0.1);
+			craft.yaw(rotVec.x * 0.1);
 		}
 		mousePos.x = event.getX();
 		mousePos.y = event.getY();
 	}
-
 	static Entity2D text;
-
 	public static void onMouseButton(ClickEvent event) {
 		rightButtonPressed = event.getButton() == GLFW_MOUSE_BUTTON_2 && event.getAction() == GLFW_PRESS;
 		if (RenderManager.isLabelMode() && event.getButton() == GLFW_MOUSE_BUTTON_1

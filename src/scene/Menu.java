@@ -23,14 +23,13 @@ import uievent.UIEventType;
 public class Menu implements Action {
 
 
-	Entity2D start,bg;
+	Entity2D start;
 	
 	@Override
 	public void Open() {
 		// TODO Auto-generated method stub
 		ModeManger.setCurrentMode(GlobalMode.GlobalStartMode);
 //		ResourceLoader.createBackground();
-		bg = ResourceLoader.creatImage("star", Constant.WIDTH, Constant.HEIGHT, 0, Constant.HEIGHT, LayerConstant.LayerBackground);
 		start = ResourceLoader.creatTextButton("¿ªÊ¼ÓÎÏ·",500,400,LayerConstant.LayerInformationText,24,Color.WHITE);
 		start.setLabelable(true);
 		UIEventManger.getInstance().addEventListenner(start.getLabel(), UIEventType.UIOnClick, new UIEventFunction() {
@@ -49,6 +48,5 @@ public class Menu implements Action {
 		// TODO Auto-generated method stub
 		ModeManger.setCurrentMode(GlobalMode.GlobalNoneMode);
 		Util.removeEntity2d(RemoveType.RemoveMemory, start);
-		Util.removeEntity2d(RemoveType.RemoveMemory, bg);
 	}
 }

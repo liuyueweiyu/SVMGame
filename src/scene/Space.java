@@ -2,17 +2,33 @@ package scene;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Queue;
+import java.util.Random;
+import java.util.concurrent.ArrayBlockingQueue;
 
-import org.lwjgl.system.CallbackI.P;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
+import org.joml.Vector3fc;
+import org.joml.Vector4f;
 
+import camera.Camera;
+import camera.TrackCamera;
 import common.Constant;
-import common.RemoveType;
-import common.Util;
 import entity.Aster;
+import entity.Entity;
 import entity.Entity2D;
 import entity.OpEntity;
 import entity.Particular;
+import entity.Planet;
+import event.Event;
 import event.KeyEvent;
+import event.TickEvent;
+import manager.InputManager;
 import mode.GlobalMode;
 import mode.ModeManger;
 import module.ResourceLoader;
@@ -28,62 +44,77 @@ import uievent.UIEventManger;
 import uievent.UIEventObj;
 import uievent.UIEventType;
 
-public class Space implements Action {
 
-	
-	public OpEntity craft;
-	
+public class Space implements Action {
+	private Vector4f tp4 = new Vector4f();
+	private Vector3f tp = new Vector3f();
+	private Quaternionf tq = new Quaternionf();
+	private TrackCamera camera;
+	private OpEntity craft;
+	private Map<Integer, Aster> stones = new HashMap<Integer, Aster>();
+	private Aster sun;
+	private Planet earth;
+	private Entity background;
+
+
 	private TextComponent bag,count;
 	private int bagPos = 0;
 	
-	
+	public Vector3fc getSunPos() {
+		return sun.getPosition();
+	}
 	
 	@Override
 	public void Open() {
-		Aster box = new Aster(ResourceLoader.getModel("blackbox"), "box");
-		Aster earth = new Aster(ResourceLoader.getModel("ball1"));
-		Aster sun = new Aster(ResourceLoader.getModel("sun"), "sun");
+		Event.register(this);
+		background = new Entity(ResourceLoader.getModel("blackbox"), "box");
+		earth = new Planet(ResourceLoader.getModel("earth"));
+		sun = new Aster(ResourceLoader.getModel("sun"), "sun");
 		Aster moon = new Aster(ResourceLoader.getModel("moon"));
 		
 		craft = new OpEntity(ResourceLoader.getModel("spacecraft"));
 		craft.setRotation(90, 180, 0);
-		MotionHandler.mobileRegist(craft);
+		
 		RenderManager.add(craft);
+		MotionHandler.addMobile(craft);
+		MotionHandler.addCollider(craft);
+		InputManager.setCraft(craft);
+		camera = new TrackCamera(craft);
+		
 		Particular par = new Particular(craft,ResourceLoader.getTexture("partcle"));
 		RenderManager.add(par,Priority.LOW);
-		
 
+		
 		moon.setPosition(10, 0, 0);
-		moon.setScale(0.5f);
+		moon.setScale(0.0005f);
 		moon.setPalstance(0, 10, 0);
 		moon.setVelocity(0, 0, -2.5);
 		RenderManager.add(moon);
-		MotionHandler.mobileRegist(moon);
-		MotionHandler.InteractRegist(moon, earth, 1);
-		MotionHandler.InteractRegist(moon, sun, 5);
+		MotionHandler.addMobile(moon);
 
-		earth.setVelocity(0, 0, -1.5);
+		earth.setPosition(0,0,1000);
+		earth.setVelocity(-1.5, 0, 0);
 		earth.setRotation(0, 0, -23.5);
-		earth.setPalstance(0, 200, 0);
+		earth.setPalstance(0, 2, 0);
+		earth.setScale(100);
 		RenderManager.add(earth);
-		MotionHandler.mobileRegist(earth);
-		MotionHandler.InteractRegist(earth, sun, 5);
+		MotionHandler.addMobile(earth);
+		MotionHandler.addCollider(earth);
 
-		sun.setPosition(100, 0, 0);
-		sun.setPalstance(0, 2, 0);
-		sun.setScale(0.001f);
+		sun.setPosition(10000, 0, 0);
+		sun.setPalstance(0, 0.2f, 0);
+		sun.setScale(0.1f);
 		RenderManager.add(sun);
-		MotionHandler.mobileRegist(sun);
+		MotionHandler.addMobile(sun);
 
-		earth.setScale(1f);
-
-		RenderManager.add(box, Priority.HIGHEST);
-		box.setScale(10000).setPosition(0, 0, -30000).setLabelable(false);
+		
+		RenderManager.add(background, Priority.HIGHEST);
+		background.setScale(1000000).setPosition(0, 0, -3000000).setLabelable(false);
 		
 		
 		setBag();
-		ModeManger.setCurrentMode(GlobalMode.GlobalCollisionMode);
-		UIEventManger.getInstance().addEventListenner(GlobalMode.GlobalCollisionMode.hashCode(), UIEventType.UIOnKey, new UIEventFunction() {
+		
+		UIEventManger.getInstance().addEventListenner(ModeManger.getCurrentModeInt(), UIEventType.UIOnKey, new UIEventFunction() {
 			
 			@Override
 			public boolean run(UIEventObj uiEventObj) {
@@ -117,16 +148,72 @@ public class Space implements Action {
 		}
 		
 		if (playBagbag.getGoods().size() == 0) {			
-			bag = new TextComponent("ÔÝÎÞÎïÆ·", Constant.WIDTH - 200, 80, LayerConstant.LayerInformation, "bag", 20);
+			bag = new TextComponent("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ·", Constant.WIDTH - 200, 80, LayerConstant.LayerInformation, "bag", 20);
 		} else {
-			int x = Constant.WIDTH - 200, y = 80 , p = 40;
-			bag = new TextComponent(playBagbag.getGoods().get(bagPos).getName() , x, y, LayerConstant.LayerInformation, "bag", 20);
-			count = new TextComponent(playBagbag.getGoods().get(bagPos).getCount()+"",x + bag.getBg().getW() - p, y - p, LayerConstant.LayerInformationText, "bag",10);
+			bag = new TextComponent(playBagbag.getGoods().get(bagPos).getName() + ":" +playBagbag.getGoods().get(bagPos).getCount() , Constant.WIDTH - 200, 80, LayerConstant.LayerInformation, "bag", 20);
 		}
+	}
+	
+	double t = 0;
+	
+	public void onTick(TickEvent event) {
+		t+=event.deltTime();
+		if(stones.size() < 200 && t>0.1) {
+			t=0;
+			generate(1);
+		}
+		Iterator<Entry<Integer, Aster>> it = stones.entrySet().iterator();
+		while(it.hasNext()) {
+			Aster now = it.next().getValue();
+			if(!inView(now.getPosition()))
+			{
+				it.remove();
+				del(now);
+			}
+		}
+	}
+	static Random r = new Random();
+	private float rand(float x) {
+		return 2*x*r.nextFloat()-x;
+	}
+	
+	private float g2(double x) {
+		float v = (float) r.nextGaussian();
+		return  v*v*(float)x;
+	}
+
+	private boolean inView(Vector3fc pos) {
+		tp4.set(pos,1).mul(camera.getViewMat());
+		return tp4.z<0;
+	}
+
+	private void generate(int n) {
+		Aster a = new Aster(ResourceLoader.getModel("6"));
+		stones.put(a.hashCode(), a);
+
+		tp.set(rand(200),rand(500),rand(100)-300).rotate(craft.getOrientation()).add(craft.getPosition());
+		a.setPosition(tp).setScale(g2(1)+1);
+		a.setPalstance(tq.rotateXYZ(rand(1), rand(1), rand(1)));
+		a.setVelocity(rand(10), rand(10), rand(10));
+		RenderManager.add(a);
+		MotionHandler.addMobile(a);
+		MotionHandler.addCollider(a);
+	}
+	private void del(Aster a) {
+		RenderManager.remove(a);
+		MotionHandler.removeMobile(a);
+		MotionHandler.removeCollider(a);
+		a.clear();
+	}
+	
+	@Override
+	public Camera camera() {
+		return camera;
 	}
 	
 	@Override
 	public void Close() {
+		Event.unregister(this);
 		bag.clear();
 		if (count != null) {			
 			count.clear();
